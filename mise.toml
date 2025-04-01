@@ -1,0 +1,20 @@
+[tools]
+python = "3.12"
+
+[env]
+_.python.venv = { path = ".venv", create = true } # create the venv if it doesn't exist
+
+[hooks]
+enter = "echo 'Welcome to the template project'"
+
+[tasks.app]
+run = 'uv run python app.py'
+
+[tasks.docs]
+run = 'cd docs; uv run mkdocs serve'
+
+[tasks.test]
+run = 'uv run pytest'
+
+[tasks.pyright]
+run = 'uv run pyright'
