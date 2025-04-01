@@ -18,3 +18,9 @@ run = 'uv run pytest'
 
 [tasks.pyright]
 run = 'uv run pyright'
+
+[tasks.chat]
+run = 'uv run chainlit run src/app.py -w'
+
+[tasks.server]
+run = 'uv run python src/mcp_server.py'
