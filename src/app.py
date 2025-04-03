@@ -1,19 +1,10 @@
 import chainlit as cl
-
-from mcp_client import MCPClient
-
 from loguru import logger
 
+from llm_utils import create_user_message
+from mcp_client import MCPClient
+
 conversation_messages = []
-
-
-def create_user_message(content: str):
-    return {
-        "role": "user",
-        "content": content,
-    }
-
-
 client = MCPClient()
 
 
@@ -23,7 +14,7 @@ async def on_chat_start():
     try:
         await client.connect_to_server()
     except Exception as e:
-        print(e)
+        logger.error(f"Error {e} while connecting to the MCP server")
 
 
 @cl.on_message
@@ -33,7 +24,6 @@ async def main(message: cl.Message):
     conversation_messages.append(formated_message)
 
     response_message = await client.get_completion(conversation_messages)
-
 
     # add message to cl interface
     await cl.Message(
@@ -46,4 +36,4 @@ async def main(message: cl.Message):
 
 @cl.on_chat_end
 def on_chat_end():
-    print("The user disconnected!")
+    logger.info("The user disconnected!")

@@ -1,13 +1,12 @@
 import asyncio
-from typing import Any, Optional
-from contextlib import AsyncExitStack
-
-from mcp import ClientSession, StdioServerParameters, types
-from mcp.client.stdio import stdio_client
-
-from loguru import logger
 import json
 import os
+from contextlib import AsyncExitStack
+from typing import Any, Optional
+
+from loguru import logger
+from mcp import ClientSession, StdioServerParameters, types
+from mcp.client.stdio import stdio_client
 from openai import AzureOpenAI
 from openai.types.chat import ChatCompletionMessage
 
