@@ -76,7 +76,7 @@ class MCPClient:
         """Clean up resources"""
         await self.exit_stack.aclose()
 
-    async def get_completion(self, messages: list[dict[str, Any]]):
+    async def get_completion(self, messages: list[dict[str, Any] | ChatCompletionMessage]):
         if not self.session:
             raise ValueError("Session is not initialized. Call connect_to_server() first.")
 
@@ -96,7 +96,7 @@ class MCPClient:
             if not tool_calls:
                 raise ValueError("No tool calls found in the response")
 
-            messages.append(response.message)  # type: ignore
+            messages.append(response.message)
 
             # TODO: do it for all calls
 
@@ -133,8 +133,6 @@ class MCPClient:
             response = completion.choices[-1]
 
             return response.message
-
-            # return ChatCompletionMessage(role="assistant", content=f"Tool {function.name} called successfully")
 
         logger.debug(f"Received response: {completion}")
 
