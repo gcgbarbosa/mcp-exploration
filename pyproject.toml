@@ -22,7 +22,7 @@ venv = ".venv"
 [tool.ruff]
 exclude = [".venv", "docs"]
 # Same as Black.
-line-length = 128
+line-length = 120
 indent-width = 4
 # Assume Python 3.9
 target-version = "py312"
@@ -38,7 +38,7 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.black]
-line-length = 128
+line-length = 120
 target-version = ["py312"]
 skip-string-normalization = false # Use double quotes (default is false, i.e., prefer double)
 skip-magic-trailing-comma = false
