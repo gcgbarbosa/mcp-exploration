@@ -114,23 +114,6 @@ class MCPClient:
                 "[" + ";".join([r.text for r in func_response.content if isinstance(r, types.TextContent)]) + "]"
             )
 
-            # messages.append(
-            #     {
-            #         "role": "assistant",
-            #         "content": function.name,
-            #         "tool_calls": [
-            #             {
-            #                 "id": tool_call.id,
-            #                 "function": {
-            #                     "name": function.name,
-            #                     "arguments": function.arguments,
-            #                 },
-            #                 "type": "function",
-            #             }
-            #         ],
-            #     }
-            # )
-
             messages.append(
                 {
                     "role": "tool",
@@ -139,14 +122,6 @@ class MCPClient:
                     "content": text_output,
                 }
             )
-
-            # messages.append(
-            #     {
-            #         "type": "function_call_output",
-            #         "call_id": tool_call.id,
-            #         "output": text_output,
-            #     }
-            # )
 
             # get response from api
             completion = self.client.chat.completions.create(
