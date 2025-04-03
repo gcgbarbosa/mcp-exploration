@@ -11,9 +11,9 @@ import os
 from openai import AzureOpenAI
 from openai.types.chat import ChatCompletionMessage
 
-api_version = os.environ.get("azure_openai_api_version")
+api_version = os.environ.get("azure_openai_api_version", "")
 azure_endpoint = os.environ.get("azure_openai_endpoint", "")
-deployment_name = os.environ.get("azure_openai_deployment")
+deployment_name = os.environ.get("azure_openai_deployment", "")
 llm_model = os.environ.get("azure_openai_model", "")
 azure_api_key = os.environ.get("azure_openai_key", "")
 
