@@ -28,3 +28,6 @@ run = 'uv run python src/mcp_server.py'
 
 [tasks.dev-server]
 run = 'uv run mcp dev src/mcp_server.py'
+
+[tasks.client]
+run = 'uv run python src/mcp_client.py'
