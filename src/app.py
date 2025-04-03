@@ -1,20 +1,10 @@
 import chainlit as cl
 
+from mcp_client import MCPClient
 
-from openai import AzureOpenAI
-import os
+from loguru import logger
 
-# may change in the future
-# https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#rest-api-versioning
-api_version = os.environ.get("azure_openai_api_version")
-azure_endpoint = os.environ.get("azure_openai_endpoint", "")
-deployment_name = os.environ.get("azure_openai_deployment")
-llm_model = os.environ.get("azure_openai_model", "")
-azure_api_key = os.environ.get("azure_openai_key", "")
-
-client = AzureOpenAI(
-    api_version=api_version, azure_endpoint=azure_endpoint, azure_deployment=deployment_name, api_key=azure_api_key
-)
+conversation_messages = []
 
 
 def create_user_message(content: str):
@@ -24,19 +14,36 @@ def create_user_message(content: str):
     }
 
 
+client = MCPClient()
+
+
+@cl.on_chat_start
+async def on_chat_start():
+    logger.info("A new chat session has started!")
+    try:
+        await client.connect_to_server()
+    except Exception as e:
+        print(e)
+
+
 @cl.on_message
 async def main(message: cl.Message):
-    # Your custom logic goes here...
-    #
-    messages = [create_user_message(message.content)]
+    # add message received from chainlit to the history
+    formated_message = create_user_message(message.content)
+    conversation_messages.append(formated_message)
 
-    completion = client.chat.completions.create(
-        model="model",
-        messages=messages,  # type: ignore
-    )
+    response_message = await client.get_completion(conversation_messages)
 
-    response = completion.choices[-1].message.content
 
+    # add message to cl interface
     await cl.Message(
-        content=response or "",
+        content=response_message.content or "Error getting response from API",
     ).send()
+
+    # add response to history
+    conversation_messages.append(response_message)
+
+
+@cl.on_chat_end
+def on_chat_end():
+    print("The user disconnected!")
