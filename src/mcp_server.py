@@ -8,10 +8,11 @@ async def list_advertisements() -> str:
     """
     List all advertisements in the database.
 
-    This asynchronous function retrieves all advertisement records from the database and returns them as a JSON-formatted string.
-    
+    This asynchronous function retrieves all advertisement records from the
+    database and returns them as a JSON-formatted string.
+
     Returns:
-        str: A JSON-formatted string representing a list of advertisements. 
+        str: A JSON-formatted string representing a list of advertisements.
              If no advertisements are found, the function returns an empty JSON array "[]".
     """
     return "[]"
